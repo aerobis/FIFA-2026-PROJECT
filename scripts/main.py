@@ -119,19 +119,21 @@ print(df.head())
 # ============================================================
 
 # FOR OVERALL DATASET
-goals = df['GROUP_STAGE_GOALS']
-mean_goals = goals.mean()
-std_goals = goals.std()
-n_goals = goals.count()
+gpm = df['GOALS_PER_MATCH']
+mean_gpm = gpm.mean()
+std_gpm = gpm.std()
+n_gpm = gpm.count()
 
 # Verify the data
-print('--- Overall Descriptive Statistics ---')
-print('Total data count (n):', n_goals)
-print(f'Mean: {mean_goals:.4f}')
-print(f'Standard Deviation: {std_goals:.4f}')
+print(f'--- Overall Descriptive Statistics ---')
+print(f'Total data count (n): {n_gpm}')
+print(f'Mean Goal Per Match: {mean_gpm:.4f}')
+print(f'Standard Deviation: {std_gpm:.4f}')
 
 # GROUPED DESCRIPTIVE COMPARISON:
-
+print('\n === Group Breakdown (On basis of Goals Per Match) === ')
+grouped_stats = df.groupby('QUALIFIED')['GOALS_PER_MATCH'].agg(['count', 'mean', 'std'])
+print(f'Grouped Stats: {grouped_stats.round(4)}')
 
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
