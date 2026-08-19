@@ -108,3 +108,12 @@ df.to_csv("../data/cleaned/task1_cleaned.csv", index = False) # To keep Pandas f
 
 print("\n Cleaned Data Preview: ")
 print(df.head())
+
+# ============================================================
+# 4. DESCRIPTIVE STATISTICS
+# ============================================================
+# Compare goals per match between:
+#   - Qualified Teams
+#   - Eliminated Teams
+# ============================================================
+
