@@ -182,8 +182,8 @@ print(f'95% Confidence Interval: [{ci_non_qual[0]:.4f}, {ci_non_qual[1]:.4f}]')
 # ============================================================
 
 t_stats, p_val = stats.ttest_ind(
-    qualified_gpm["GOALS_PER_MATCH"],
-    eliminated_gpm["GOALS_PER_MATCH"],
+    qualified_gpm,
+    non_qualified_gpm,
     equal_var = False, #Expanded below:
     alternative = 'greater' #Convert to a one-sided p-value
 )
@@ -199,6 +199,6 @@ print(f'\t P-value (one-sided): {p_val}')
 
 print("\n <===== CONCLUSION =====>")
 if p_val < 0.05:
-    print("\t We reject the null hypothesis. I.e. Yes, teams that qualify do score more goals on average than teams that don't.")
+    print("We reject the null hypothesis. (Qualified Teams score significantly more goals per match than teams that are Eliminated.)")
 else:
-    print("\t We accept the null hypothesis. I.e. No, teams that qualify do not score more goalls on average than teams that don't.")
+    print("We accept the null hypothesis. (Qualified Teams do not score significantly more goals per match than teams that are Eliminated.)")
