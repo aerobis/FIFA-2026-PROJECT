@@ -117,3 +117,29 @@ print(df.head())
 #   - Eliminated Teams
 # ============================================================
 
+goals = df['GROUP_STAGE_GOALS']
+mean_goals = goals.mean()
+std_goals = goals.std()
+n_goals = goals.count()
+
+# Verify the data
+print('--- Descriptive Statistics ---')
+print('Total data count (n):', n_goals)
+print(f'Mean: {mean_goals:.4f}')
+print(f'Standard Deviation: {std_goals:.4f}')
+
+# 95% CONFIDENCE INTERVAL FOR THE QUALIFYING TEAMS
+qualified_teams = df[df['QUALIFIED'] == 'YES']['GROUP_STAGE_GOALS']
+
+n_qual = qualified_teams.count()
+mean_qual = qualified_teams.mean()
+std_qual = qualified_teams.std()
+sem_qual = stats.sem(qualified_teams)
+ci_qual = stats.t.interval(0.95, df=n_qual - 1, loc=mean_qual, scale=sem_qual)
+
+# Verify the data
+print('\n--- Knockout Qualified Teams (YES) ---')
+print('Count (n):', n_qual)
+print(f'Mean: {mean_qual:.4f}')
+print(f'Standard Deviation: {std_qual:.4f}')
+print(f'95% Confidence Interval: [{ci_qual[0]:.4f}, {ci_qual[1]:.4f}]')
