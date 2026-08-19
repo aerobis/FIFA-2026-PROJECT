@@ -143,3 +143,20 @@ print('Count (n):', n_qual)
 print(f'Mean: {mean_qual:.4f}')
 print(f'Standard Deviation: {std_qual:.4f}')
 print(f'95% Confidence Interval: [{ci_qual[0]:.4f}, {ci_qual[1]:.4f}]')
+
+# 95% CONFIDENCE INTERVAL FOR THE ELIMINATED TEAMS
+
+non_qualified_teams = df[df['QUALIFIED'] == 'NO']['GROUP_STAGE_GOALS']
+
+n_non_qual = non_qualified_teams.count()
+mean_non_qual = non_qualified_teams.mean()
+std_non_qual = non_qualified_teams.std()
+sem_non_qual = stats.sem(non_qualified_teams)
+ci_non_qual = stats.t.interval(0.95, df=n_non_qual - 1, loc=mean_non_qual, scale=sem_non_qual)
+
+# Verify the data
+print('\n--- Non-qualifying Teams (NO) ---')
+print('Count (n):', n_non_qual)
+print(f'Mean: {mean_non_qual:.4f}')
+print(f'Standard Deviation: {std_non_qual:.4f}')
+print(f'95% Confidence Interval: [{ci_non_qual[0]:.4f}, {ci_non_qual[1]:.4f}]')
