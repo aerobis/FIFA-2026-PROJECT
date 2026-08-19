@@ -58,3 +58,14 @@ print(raw_data.head())
 #   - Create derived variable
 # ============================================================
 
+df = raw_data.copy()
+
+# CONVERT NUMERIC COLUMNS
+# Convert the columns to numeric, if not possible, return NaN for the column
+df["GROUP_STAGE_MATCHES"] = pd.to_numeric(df["GROUP_STAGE_MATCHES"], errors = "coerce")
+df["GROUP_STAGE_GOALS"] = pd.to_numeric(df["GROUP_STAGE_GOALS"], errors = "coerce")
+
+# STANDARDIZE "QUALIFIED" COLUMN
+# i.e. Remove any leading/trailing whitespaces and capitalize the words
+df["QUALIFIED"] = df["QUALIFIED"].str.strip().str.title()
+
