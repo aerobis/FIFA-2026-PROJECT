@@ -40,3 +40,9 @@ from scipy import stats
 # Data has been manually collected and stored in MsExcel.
 # ============================================================
 
+# LOAD RAW DATASET:
+raw_data = pd.read_excel("../data/raw/task1_raw.xlsx");
+
+# PREVIEW DATA:
+print("Raw Data Preview: ")
+print(raw_data.head())
