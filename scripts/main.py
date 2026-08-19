@@ -35,7 +35,7 @@ from scipy import stats
 #
 # Data Description:
 # Raw dataset contains 48 teams with the following columns:
-# TEAM | GROUP_STAGE_MATCHES | GROUP_STAGE_GOALS | QUALIFIED
+# TEAMS | GROUP_STAGE_MATCHES | GROUP_STAGE_GOALS | QUALIFIED
 # 
 # Data has been manually collected and stored in MsExcel.
 # ============================================================
