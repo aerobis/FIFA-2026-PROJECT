@@ -113,28 +113,40 @@ print(df.head())
 # 4. DESCRIPTIVE STATISTICS
 # ============================================================
 # Compare goals per match between:
+#   - Overall Dataset
 #   - Qualified Teams
 #   - Eliminated Teams
 # ============================================================
 
+# FOR OVERALL DATASET
 goals = df['GROUP_STAGE_GOALS']
 mean_goals = goals.mean()
 std_goals = goals.std()
 n_goals = goals.count()
 
 # Verify the data
-print('--- Descriptive Statistics ---')
+print('--- Overall Descriptive Statistics ---')
 print('Total data count (n):', n_goals)
 print(f'Mean: {mean_goals:.4f}')
 print(f'Standard Deviation: {std_goals:.4f}')
 
-# 95% CONFIDENCE INTERVAL FOR THE QUALIFYING TEAMS
-qualified_teams = df[df['QUALIFIED'] == 'YES']['GROUP_STAGE_GOALS']
+# GROUPED DESCRIPTIVE COMPARISON:
 
-n_qual = qualified_teams.count()
-mean_qual = qualified_teams.mean()
-std_qual = qualified_teams.std()
-sem_qual = stats.sem(qualified_teams)
+
+# ============================================================
+# 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
+# 95% Confidence Interval for mean goals per match 
+# Formula for calculating CI:
+# mean +- t * (std / sqrt(n))
+# ============================================================
+
+# 95% CONFIDENCE INTERVAL FOR THE QUALIFYING TEAMS
+qualified_gpm = df[df['QUALIFIED'] == 'YES']['GOALS_PER_MATCH']
+
+n_qual = qualified_gpm.count()
+mean_qual = qualified_gpm.mean()
+std_qual = qualified_gpm.std()
+sem_qual = stats.sem(qualified_gpm)
 ci_qual = stats.t.interval(0.95, df=n_qual - 1, loc=mean_qual, scale=sem_qual)
 
 # Verify the data
@@ -146,12 +158,12 @@ print(f'95% Confidence Interval: [{ci_qual[0]:.4f}, {ci_qual[1]:.4f}]')
 
 # 95% CONFIDENCE INTERVAL FOR THE ELIMINATED TEAMS
 
-non_qualified_teams = df[df['QUALIFIED'] == 'NO']['GROUP_STAGE_GOALS']
+non_qualified_gpm = df[df['QUALIFIED'] == 'NO']['GOALS_PER_MATCH']
 
-n_non_qual = non_qualified_teams.count()
-mean_non_qual = non_qualified_teams.mean()
-std_non_qual = non_qualified_teams.std()
-sem_non_qual = stats.sem(non_qualified_teams)
+n_non_qual = non_qualified_gpm.count()
+mean_non_qual = non_qualified_gpm.mean()
+std_non_qual = non_qualified_gpm.std()
+sem_non_qual = stats.sem(non_qualified_gpm)
 ci_non_qual = stats.t.interval(0.95, df=n_non_qual - 1, loc=mean_non_qual, scale=sem_non_qual)
 
 # Verify the data
@@ -160,3 +172,4 @@ print('Count (n):', n_non_qual)
 print(f'Mean: {mean_non_qual:.4f}')
 print(f'Standard Deviation: {std_non_qual:.4f}')
 print(f'95% Confidence Interval: [{ci_non_qual[0]:.4f}, {ci_non_qual[1]:.4f}]')
+
