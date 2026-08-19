@@ -152,7 +152,7 @@ sem_qual = stats.sem(qualified_gpm)
 ci_qual = stats.t.interval(0.95, df=n_qual - 1, loc=mean_qual, scale=sem_qual)
 
 # Verify the data
-print('\n--- Knockout Qualified Teams (YES) ---')
+print('\n --- Knockout Qualified Teams (YES) ---')
 print('Count (n):', n_qual)
 print(f'Mean: {mean_qual:.4f}')
 print(f'Standard Deviation: {std_qual:.4f}')
@@ -169,9 +169,36 @@ sem_non_qual = stats.sem(non_qualified_gpm)
 ci_non_qual = stats.t.interval(0.95, df=n_non_qual - 1, loc=mean_non_qual, scale=sem_non_qual)
 
 # Verify the data
-print('\n--- Non-qualifying Teams (NO) ---')
+print('\n --- Non-qualifying Teams/Eliminated Teams (NO) ---')
 print('Count (n):', n_non_qual)
 print(f'Mean: {mean_non_qual:.4f}')
 print(f'Standard Deviation: {std_non_qual:.4f}')
 print(f'95% Confidence Interval: [{ci_non_qual[0]:.4f}, {ci_non_qual[1]:.4f}]')
 
+# ============================================================
+# 6. INFERENTIAL STATISTICS: TWO-SAMPLE T-TEST
+# ============================================================
+# An Unpooled Welch's T-test is used for this Task
+# ============================================================
+
+t_stats, p_val = stats.ttest_ind(
+    qualified["GOALS_PER_MATCH"],
+    eliminated["GOALS_PER_MATCH"],
+    equal_var = False, #Expanded below:
+    alternative = 'greater' #Convert to a one-sided p-value
+)
+
+# Since we assume the null hypothesis is true and work towards disproving it,
+# we can safely assume that two populations do not have equal variance
+
+print("\n === T-Test Results ===")
+print(f'\t T-statistic (t*): {t_stats}')
+
+print("\n === P-Value Results ===")
+print(f'\t P-value (one-sided): {p_val}')
+
+print("\n <===== CONCLUSION =====>")
+if p_val < 0.05:
+    print("\t We reject the null hypothesis. I.e. Yes, teams that qualify do score more goals on average than teams that don't.")
+else:
+    print("\t We accept the null hypothesis. I.e. No, teams that qualify do not score more goalls on average than teams that don't.")
