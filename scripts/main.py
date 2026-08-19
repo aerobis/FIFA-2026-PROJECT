@@ -133,7 +133,7 @@ print(f'Standard Deviation: {std_gpm:.4f}')
 # GROUPED DESCRIPTIVE COMPARISON:
 print('\n === Group Breakdown (On basis of Goals Per Match) === ')
 grouped_stats = df.groupby('QUALIFIED')['GOALS_PER_MATCH'].agg(['count', 'mean', 'std'])
-print(f'Grouped Stats: {grouped_stats.round(4)}')
+print(grouped_stats.round(4))
 
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
