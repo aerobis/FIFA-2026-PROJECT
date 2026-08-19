@@ -67,7 +67,7 @@ df["GROUP_STAGE_GOALS"] = pd.to_numeric(df["GROUP_STAGE_GOALS"], errors = "coerc
 
 # STANDARDIZE "QUALIFIED" COLUMN
 # i.e. Remove any leading/trailing whitespaces and capitalize the words
-df["QUALIFIED"] = df["QUALIFIED"].str.strip().str.title()
+df["QUALIFIED"] = df["QUALIFIED"].str.strip().str.upper()
 
 # ============================================================
 # DATA VALIDATION CHECKS
@@ -87,11 +87,12 @@ assert df["TEAMS"].nunique() == 48, "Error: Duplicate teams detected"
 assert (df["GROUP_STAGE_MATCHES"] == 3).all(), "Error: All teams must have 3 matches played"
 
 # CHECK QUALIFICATION DISTRIBUTION
-assert (df["QUALIFIED"] == "Yes").sum() == 32, "Error: 32 teams should have qualified"
+assert (df["QUALIFIED"] == "YES").sum() == 32, "Error: 32 teams should have qualified"
 assert (df["QUALIFIED"] == "NO").sum() == 16,  "Error: 16 teams should have been eliminated"
+
+# Used for further checking given the first test failed
+# print(f"Sum of qualified: {(df["QUALIFIED"] == "YES").sum()}")
 
 # CHECK FOR ANY MISSING VALUES
 print(f"\n Missing values check: ${df.isnull().sum()}") #Count out how many, if any, data are missing
-
-
 
