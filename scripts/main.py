@@ -96,3 +96,15 @@ assert (df["QUALIFIED"] == "NO").sum() == 16,  "Error: 16 teams should have been
 # CHECK FOR ANY MISSING VALUES
 print(f"\n Missing values check: ${df.isnull().sum()}") #Count out how many, if any, data are missing
 
+# ============================================================
+# DERIVED VARIABLE
+# ============================================================
+
+# GOALS PER MATCH (KEY ANALYSIS VARIABLE)
+df["GOALS_PER_MATCH"] = df["GROUP_STAGE_GOALS"] / df["GROUP_STAGE_MATCHES"]
+
+# SAVE THE CLEANED DATASET
+df.to_csv("../data/cleaned/task1_cleaned.csv", index = False) # To keep Pandas from writing row numbers into the csv file
+
+print("\n Cleaned Data Preview: ")
+print(df.head())
