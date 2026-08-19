@@ -188,8 +188,7 @@ t_stats, p_val = stats.ttest_ind(
     alternative = 'greater' #Convert to a one-sided p-value
 )
 
-# Since we assume the null hypothesis is true and work towards disproving it,
-# we can safely assume that two populations do not have equal variance
+# Since Welch's T-test assumes inequal variance between the two groups
 
 print("\n === T-Test Results ===")
 print(f'\t T-statistic (t*): {t_stats}')
