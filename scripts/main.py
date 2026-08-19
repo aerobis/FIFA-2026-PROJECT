@@ -182,8 +182,8 @@ print(f'95% Confidence Interval: [{ci_non_qual[0]:.4f}, {ci_non_qual[1]:.4f}]')
 # ============================================================
 
 t_stats, p_val = stats.ttest_ind(
-    qualified["GOALS_PER_MATCH"],
-    eliminated["GOALS_PER_MATCH"],
+    qualified_gpm["GOALS_PER_MATCH"],
+    eliminated_gpm["GOALS_PER_MATCH"],
     equal_var = False, #Expanded below:
     alternative = 'greater' #Convert to a one-sided p-value
 )
