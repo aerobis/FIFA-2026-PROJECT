@@ -81,7 +81,7 @@ df["QUALIFIED"] = df["QUALIFIED"].str.strip().str.title()
 assert len(df) == 48, "Error: Dataset doesn't contain the required 48 teams"
 
 # CHECK UNIQUE TEAMS
-assert df["TEAM"].nunique() == 48, "Error: Duplicate teams detected"
+assert df["TEAMS"].nunique() == 48, "Error: Duplicate teams detected"
 
 # CHECK GROUP MATCHES CONSISTENCY
 assert (df["GROUP_STAGE_MATCHES"] == 3).all(), "Error: All teams must have 3 matches played"
@@ -92,5 +92,6 @@ assert (df["QUALIFIED"] == "NO").sum() == 16,  "Error: 16 teams should have been
 
 # CHECK FOR ANY MISSING VALUES
 print(f"\n Missing values check: ${df.isnull().sum()}") #Count out how many, if any, data are missing
+
 
 
