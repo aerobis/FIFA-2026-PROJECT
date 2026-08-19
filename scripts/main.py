@@ -46,3 +46,15 @@ raw_data = pd.read_excel("../data/raw/task1_raw.xlsx");
 # PREVIEW DATA:
 print("Raw Data Preview: ")
 print(raw_data.head())
+
+
+# ============================================================
+# 3. DATA PREPARATION AND CLEANING
+# ============================================================
+# Objectives:
+#   - Ensure data has correct data types
+#   - Remove any inconsistencies
+#   - Validate dataset integrity and check for errors/duplicates
+#   - Create derived variable
+# ============================================================
+
