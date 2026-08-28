@@ -164,7 +164,6 @@ print("Cleaned dataset saved as: task2_cleaned.csv")
 print(f"Final rows: {len(df)}")
 print(f"Final unique teams: {df['TEAM'].nunique()}")
 
-
 # ============================================================
 # 4. DESCRIPTIVE STATISTICS
 # ============================================================
@@ -173,7 +172,27 @@ print(f"Final unique teams: {df['TEAM'].nunique()}")
 #   - Their Knockout Stage Matches
 # ============================================================
 
+print("\n--- DESCRIPTIVE STATISTICS (BY STAGE) ---")
 
+for stage in ["GROUP", "KNOCKOUT"]:
+    stage_df = df[df["STAGE"] == stage]
+    data = stage_df["GOALS_PER_SHOT"] #Take out goal per shot (gps) for each stage
+    
+    data_len = len(data)
+    mean = data.mean()
+    std = data.std(ddof=1)
+    sem = stats.sem(data)
+    median = data.median()
+    iqr = data.quantile(0.75) - data.quantile(0.25)
+    skew = data.skew()
+    
+    print(f"\n--- {stage} STAGE ---")
+    print(f"Count (n): {data_len}")
+    print(f"Mean: {mean:.4f}")
+    print(f"Standard Deviation: {std:.4f}")
+    print(f"Median: {median:.4f}")
+    print(f"IQR: {iqr:.4f}")
+    print(f"Skewness: {skew:.4f}")
 
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
