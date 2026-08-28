@@ -144,6 +144,15 @@ df = df.drop_duplicates(subset=["TEAM", "STAGE"], keep="first")
 print("\n--- 12. FINAL MISSING VALUE CHECK ---")
 print(df.isnull().sum())
 
+# ============================================================
+# DERIVED VARIABLE
+# ============================================================
+
+df["GOALS_PER_SHOT"] = df["GOALS"] / df["SHOTS"]
+
+print("\n--- Derived Variable Check ---")
+print(df[["TEAM", "STAGE", "GOALS_PER_SHOT"]].head())
+
 # -------------------------------
 # SAVE CLEANED DATASET
 # -------------------------------
@@ -155,15 +164,6 @@ print("Cleaned dataset saved as: task2_cleaned.csv")
 print(f"Final rows: {len(df)}")
 print(f"Final unique teams: {df['TEAM'].nunique()}")
 
-
-# ============================================================
-# DERIVED VARIABLE
-# ============================================================
-
-df["GOALS_PER_SHOT"] = df["GOALS"] / df["SHOTS"]
-
-print("\n--- Derived Variable Check ---")
-print(df[["TEAM", "STAGE", "GOALS_PER_SHOT"]].head())
 
 # ============================================================
 # 4. DESCRIPTIVE STATISTICS
