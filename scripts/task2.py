@@ -160,7 +160,10 @@ print(f"Final unique teams: {df['TEAM'].nunique()}")
 # DERIVED VARIABLE
 # ============================================================
 
+df["GOALS_PER_SHOT"] = df["GOALS"] / df["SHOTS"]
 
+print("\n--- Derived Variable Check ---")
+print(df[["TEAM", "STAGE", "GOALS_PER_SHOT"]].head())
 
 # ============================================================
 # 4. DESCRIPTIVE STATISTICS
