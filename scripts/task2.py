@@ -178,7 +178,7 @@ for stage in ["GROUP", "KNOCKOUT"]:
     stage_df = df[df["STAGE"] == stage]
     data = stage_df["GOALS_PER_SHOT"] #Take out goal per shot (gps) for each stage
     
-    data_len = len(data)
+    n = len(data)
     mean = data.mean()
     std = data.std(ddof=1)
     sem = stats.sem(data)
@@ -187,7 +187,7 @@ for stage in ["GROUP", "KNOCKOUT"]:
     skew = data.skew()
     
     print(f"\n--- {stage} STAGE ---")
-    print(f"Count (n): {data_len}")
+    print(f"Count (n): {n}")
     print(f"Mean: {mean:.4f}")
     print(f"Standard Deviation: {std:.4f}")
     print(f"Median: {median:.4f}")
@@ -202,6 +202,26 @@ for stage in ["GROUP", "KNOCKOUT"]:
 # ============================================================
 
 print("\n=== CONFIDENCE INTERVAL (PAIRED DIFFERENCE) ===")
+
+# SORT TEAMS AND ALIGN
+group_data = df[df["STAGE"]=="GROUP"].sort_values("TEAM").reset_index(drop=True)
+ko_data = df[df["STAGE"] == "KNOCKOUT"].sort_values("TEAM").reset_index(drop=True)
+
+# COMPUTE THE DIFFERENCE
+diff = ko_data["GOALS_PER_SHOT"] - group_data["GOALS_PER_SHOT"]
+
+n = len(data)
+mean_diff = diff.mean()
+sem_diff = stats.sem(diff)
+
+t_crit = stats.t.ppf(0.975, df = n - 1)
+
+ci_lower = mean_diff - t_crit * sem_diff
+ci_upper = mean_diff + t_crit * sem_diff
+
+print(f"Count (n): {n}")
+print(f"Mean Difference: {mean_diff:.4f}")
+print(f"95% CI: [{ci_lower:.4f}, {ci_upper:.4f}]")
 
 # ============================================================
 # 6. INFERENTIAL STATISTICS: PAIRED T-TEST
