@@ -41,7 +41,7 @@ from scipy import stats
 # ============================================================
 
 # LOAD RAW DATASET:
-raw_data = pd.read_excel("../data/raw/task1_raw.xlsx");
+raw_data = pd.read_excel("data/raw/task1_raw.xlsx");
 
 # PREVIEW DATA:
 print("Raw Data Preview: ")
@@ -104,7 +104,7 @@ print(f"\n Missing values check: ${df.isnull().sum()}") #Count out how many, if 
 df["GOALS_PER_MATCH"] = df["GROUP_STAGE_GOALS"] / df["GROUP_STAGE_MATCHES"]
 
 # SAVE THE CLEANED DATASET
-df.to_csv("../data/cleaned/task1_cleaned.csv", index = False) # To keep Pandas from writing row numbers into the csv file
+df.to_csv("data/cleaned/task1_cleaned.csv", index = False) # To keep Pandas from writing row numbers into the csv file
 
 print("\n Cleaned Data Preview: ")
 print(df.head())

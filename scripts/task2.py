@@ -42,7 +42,9 @@ from scipy import stats
 # Data has been manually collected and stored in MsExcel.
 # ============================================================
 
-raw_data = pd.read_excel("task2_raw.xlsx")
+#LOAD RAW DATASET
+raw_data = pd.read_excel("data/raw/task2_raw.xlsx")
+
 print("Raw Data Preview: ")
 print(raw_data.head())
 
@@ -147,7 +149,7 @@ print(df.isnull().sum())
 # -------------------------------
 
 print("\n--- 13. SAVE CLEANED DATASET ---")
-df.to_excel("../data/cleaned/task2_cleaned.csv", index=False)
+df.to_csv("data/cleaned/task2_cleaned.csv", index=False)
 
 print("Cleaned dataset saved as: task2_cleaned.csv")
 print(f"Final rows: {len(df)}")
