@@ -196,6 +196,10 @@ print(f'\t T-statistic (t*): {t_stats}')
 print("\n === P-Value Results ===")
 print(f'\t P-value (one-sided): {p_val}')
 
+# ============================================================
+# CONCLUSION
+# ============================================================
+
 print("\n <===== CONCLUSION =====>")
 if p_val < 0.05:
     print("We reject the null hypothesis. (Qualified Teams score significantly more goals per match than teams that are Eliminated.)")

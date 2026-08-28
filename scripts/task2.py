@@ -226,4 +226,36 @@ print(f"95% CI: [{ci_lower:.4f}, {ci_upper:.4f}]")
 # ============================================================
 # 6. INFERENTIAL STATISTICS: PAIRED T-TEST
 # ============================================================
+# A paired t-test is used since the same teams are observed
+# in both GROUP and KNOCKOUT stages
+# ============================================================
 
+print('\n=== PAIRED T-TEST RESULTS ===')
+
+# ALIGN DATA USING PIVOT (Safer than sorting)
+pivot = df.pivot(index="TEAM", columns="STAGE", values="GOALS_PER_SHOT")
+
+# DROP ANY INCOMPLETE ROWS (JUST IN CASE)
+pivot = pivot.dropna()
+
+# PERFORM THE PAIRED T-TEST
+t_stat, p_val = stats.ttest_rel(
+    pivot["KNOCKOUT"],
+    pivot["GROUP"]
+)
+
+print(f"T-Statistic (t*): {t_stat:.4f}")
+print(f"P-Value (two-sided): {p_val:.4f}")
+
+# ============================================================
+# CONCLUSION
+# ============================================================
+
+alpha = 0.05
+
+print("\n<=== CONCLUSION ===>")
+
+if p_val < alpha:
+    print("We reject the null hypothesis. (There is a significant difference in the goal-per-shot efficiency of teams between Group and Knockout Stages.)")
+else:
+    print("We accept the null hpothesis. (There is no significant difference in goal-per-shot efficiency of teams between stages.)")
