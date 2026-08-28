@@ -35,7 +35,7 @@ from scipy import stats
 #   - Official Fifa Site
 #
 # Data Description:
-# Raw dataset contains 48 teams with the following columns:
+# Raw dataset contains 32 teams with the following columns:
 # TEAMS | STAGE | GOALS | SHOTS
 # 
 # Only teams that qualify for the Knockout Stages have been considered
@@ -174,7 +174,7 @@ print(f"Final unique teams: {df['TEAM'].nunique()}")
 
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
-# 95% Confidence Interval for mean goals per match 
+# 95% Confidence Interval for mean difference in goal-per-shot efficiency
 # Formula for calculating CI:
 # mean +- t * (std / sqrt(n))
 # ============================================================
