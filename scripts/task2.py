@@ -172,7 +172,7 @@ print(f"Final unique teams: {df['TEAM'].nunique()}")
 #   - Their Knockout Stage Matches
 # ============================================================
 
-print("\n--- DESCRIPTIVE STATISTICS (BY STAGE) ---")
+print("\n=== DESCRIPTIVE STATISTICS (BY STAGE) ===")
 
 for stage in ["GROUP", "KNOCKOUT"]:
     stage_df = df[df["STAGE"] == stage]
@@ -201,6 +201,7 @@ for stage in ["GROUP", "KNOCKOUT"]:
 # mean +- t * (std / sqrt(n))
 # ============================================================
 
+print("\n=== CONFIDENCE INTERVAL (PAIRED DIFFERENCE) ===")
 
 # ============================================================
 # 6. INFERENTIAL STATISTICS: PAIRED T-TEST
