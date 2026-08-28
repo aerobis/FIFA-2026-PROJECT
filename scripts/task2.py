@@ -16,7 +16,7 @@
 #
 # Hypotheses:
 # Null Hypotehsis (H0): μ_diff = 0
-# Alternate Hypothesis (h1): μ_diff > != 0
+# Alternate Hypothesis (h1): μ_diff != 0
 # where μ_diff = (Knockout - Group) efficiency
 # ============================================================
 
@@ -42,8 +42,9 @@ from scipy import stats
 # Data has been manually collected and stored in MsExcel.
 # ============================================================
 
-
-
+raw_data = pd.read_excel("task2_raw.xlsx")
+print("Raw Data Preview: ")
+print(raw_data.head())
 
 # ============================================================
 # 3. DATA PREPARATION AND CLEANING
@@ -54,6 +55,103 @@ from scipy import stats
 #   - Validate dataset integrity and check for errors/duplicates
 #   - Create derived variable
 # ============================================================
+
+df = raw_data.copy()
+
+# -------------------------------
+# BASIC DATA CHECKS
+# -------------------------------
+print("--- 1. NUMBER OF OBSERVATIONS ---")
+print(f"Total rows (should be 64): {len(df)}")
+
+print("\n--- 2. CHECK FOR DUPLICATE TEAM + STAGE ROWS ---")
+duplicates = df.duplicated(subset=["TEAM", "STAGE"]).sum()
+print(f"Duplicate TEAM + STAGE rows found: {duplicates}")
+
+print("\n--- 3. CHECK FOR MISSING VALUES ---")
+print(df.isnull().sum())
+
+# -------------------------------
+# STANDARDIZING COLUMN TEXT
+# -------------------------------
+
+print("\n--- 4. CLEAN TEXT COLUMNS ---")
+df["TEAM"] = df["TEAM"].astype(str).str.strip()
+df["STAGE"] = df["STAGE"].astype(str).str.strip().str.upper()
+
+# -------------------------------
+# CHECKING AND FIXING DATA COLUMN DATA TYPES
+# -------------------------------
+
+print("\n--- 5. CHECK & FIX DATA TYPES ---")
+print("Original data types:")
+print(df.dtypes)
+
+df["GOALS"] = pd.to_numeric(df["GOALS"], errors="coerce")
+df["SHOTS"] = pd.to_numeric(df["SHOTS"], errors="coerce")
+
+print("\nData types after conversion:")
+print(df.dtypes)
+
+# -------------------------------
+# VALIDATE VALUES FOR THE 'STAGE' COLUMN
+# -------------------------------
+
+print("\n--- 6. VALIDATE STAGE VALUES ---")
+unique_stages = df["STAGE"].unique()
+print(f"Unique values in STAGE column: {unique_stages}")
+
+invalid_stage = df[~df["STAGE"].isin(["GROUP", "KNOCKOUT"])]
+print(f"Rows with invalid STAGE values: {len(invalid_stage)}")
+
+# -------------------------------
+# VALIDATE COLUMN DETAILS TO ENSURE DATA INTEGRITY AND CONSISTENCY
+# -------------------------------
+
+print("\n--- 7. CHECK NUMBER OF UNIQUE TEAMS ---")
+unique_teams = df["TEAM"].nunique()
+print(f"Unique teams (should be 32): {unique_teams}")
+
+print("\n--- 8. CHECK EACH TEAM APPEARS EXACTLY TWICE ---")
+team_counts = df["TEAM"].value_counts()
+invalid_team_counts = team_counts[team_counts != 2]
+print(f"Teams not appearing exactly twice: {len(invalid_team_counts)}")
+if len(invalid_team_counts) > 0:
+    print(invalid_team_counts)
+
+print("\n--- 9. CHECK EACH TEAM HAS BOTH GROUP AND KNOCKOUT ---")
+stage_check = df.groupby("TEAM")["STAGE"].apply(set)
+invalid_stage_pairs = stage_check[
+    stage_check.apply(lambda x: x != {"GROUP", "KNOCKOUT"})
+]
+print(f"Teams missing GROUP or KNOCKOUT row: {len(invalid_stage_pairs)}")
+if len(invalid_stage_pairs) > 0:
+    print(invalid_stage_pairs)
+
+print("\n--- 10. CHECK FOR NEGATIVE GOALS OR SHOTS ---")
+invalid_numbers = df[(df["GOALS"] < 0) | (df["SHOTS"] < 0)]
+print(f"Rows with negative GOALS/SHOTS: {len(invalid_numbers)}")
+
+# -------------------------------
+# SANITIZE DUPLICATED THROUGH REMOVAL
+# -------------------------------
+
+print("\n--- 11. REMOVE EXACT DUPLICATES ---")
+df = df.drop_duplicates(subset=["TEAM", "STAGE"], keep="first")
+
+print("\n--- 12. FINAL MISSING VALUE CHECK ---")
+print(df.isnull().sum())
+
+# -------------------------------
+# SAVE CLEANED DATASET
+# -------------------------------
+
+print("\n--- 13. SAVE CLEANED DATASET ---")
+df.to_excel("../data/cleaned/task2_cleaned.csv", index=False)
+
+print("Cleaned dataset saved as: task2_cleaned.csv")
+print(f"Final rows: {len(df)}")
+print(f"Final unique teams: {df['TEAM'].nunique()}")
 
 
 # ============================================================
@@ -81,7 +179,6 @@ from scipy import stats
 
 
 # ============================================================
-# 6. INFERENTIAL STATISTICS: TWO-SAMPLE T-TEST
+# 6. INFERENTIAL STATISTICS: PAIRED T-TEST
 # ============================================================
-# An Unpooled Welch's T-test is used for this Task
-# ============================================================
+
