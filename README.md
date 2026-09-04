@@ -32,14 +32,11 @@ For teams that qualify for the knockout stages, do their midfielders average mor
 
 ### DETAILS ####
 
-### Details for Task 1:
-
 # Role Division:
 
-For Task 1, we decided to divide our roles as such:
 1) Data Collection:
     Collecting the raw data that is relevant to our calculations from the Site
-    # Handled by Susmita and Sobit
+    # Handled by Susmita
 2) Data Cleaning:
     Cleaning the raw data after validating it to get it ready for formal statistical calculations:
     # Handled by Sobit
