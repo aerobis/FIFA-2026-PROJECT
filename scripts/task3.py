@@ -177,9 +177,26 @@ print(f"Eliminated CI: [{ci_elim[0]:.2f}, {ci_elim[1]:.2f}]")
 # Welch's T-Test used due to independent groups being observed
 # ============================================================
 
+t_stat, p_val = stats.ttest_ind(
+    qualified,
+    eliminated,
+    equal_var = False,
+    alternative = "greater"
+)
 
+print("\n=== T-TEST RESULTS ===")
+print(f"T-statistic: {t_stat:.4f}")
+print(f"P-value: {p_val:.4f}")
 
 # ============================================================
 # CONCLUSION
 # ============================================================
 
+alpha = 0.05
+
+print("\n === CONCLUSION ===")
+
+if p_val < alpha:
+    print("We reject the null hypothesis. (Qualified teams have significantly higher ball possession rates than eliminated teams)")
+else:
+    print("We accept the null hypothesis. (Qualified teams do not have significantly higher ball possession rates than eliminated teams)")
