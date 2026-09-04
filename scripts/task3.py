@@ -114,7 +114,7 @@ print(df["QUALIFIED"].value_counts())
 # DERIVED VARIABLE
 # ============================================================
 
-df["AVG_POSSESSION"] = df[possession_cols].mean(axis=1)
+df["AVG_POSSESSION"] = df[possession_cols].mean(axis=1).round(4)
 
 # -------------------------------
 # SAVE CLEANED DATASET
