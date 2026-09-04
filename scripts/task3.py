@@ -58,6 +58,39 @@ print(raw_data.head())
 
 df = raw_data.copy()
 
+# STANDARDIZE COLUMN NAMES
+df.columns = (
+    df.columns
+    .str.strip() 
+    .str.upper()
+    # REPLACE WHITESPACES WITH UNDERSCORES
+    .str.replace(" ", "_") 
+    # REMOVE PARANTHESES AND PERCENTAGE SYMBOL
+    .str.replace("(" , "", regex=False)
+    .str.replace(")" , "", regex=False)
+    .str.replace("%" , "", regex=False)
+)
+
+
+print("\n--- 1. NUMBER OF OBSERVATIONS ---")
+print(f"Total rows: {len(df)}")
+
+print("\n--- 2. CHECK FOR DUPLICATES ---")
+print(f"Duplicate teams: {df['TEAM'].duplicated().sum()}")
+
+print("\n--- 3. CHECK FOR MISSING VALUES ---")
+print(df.isnull().sum())
+
+print("\n--- 4. CHECK DATA TYPES ---")
+print(df.dtypes)
+
+# CLEAN POSSESSION COLUMNS (REMOVE % AND CONVERT TO NUMERIC)
+possession_cols = [
+    'MATCH_1_POSSESSION',
+    'MATCH_2_POSSESSION',
+    'MATCH_3_POSSESSION'
+]
+
 
 # ============================================================
 # DERIVED VARIABLE
