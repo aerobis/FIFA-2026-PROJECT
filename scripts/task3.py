@@ -153,6 +153,23 @@ print(f"Std: {eliminated.std():.2f}")
 # mean +- t * (std / sqrt(n))
 # ============================================================
 
+ci_qual = stats.t.interval(
+    0.95,
+    df = len(qualified - 1),
+    loc = qualified.mean(),
+    scale = stats.sem(qualified)
+)
+
+ci_elim = stats.t.interval(
+    0.95,
+    df = len(eliminated - 1),
+    loc = eliminated.mean(),
+    scale = stats.sem(eliminated)
+)
+
+print("\n=== CONFIDENCE INTERVALS ===")
+print(f"Qualified CI: [{ci_qual[0]:.2f}, {ci_qual[1]:.2f}]")
+print(f"Eliminated CI: [{ci_elim[0]:.2f}, {ci_elim[1]:.2f}]")
 
 # ============================================================
 # 6. INFERENTIAL STATISTICS: PAIRED T-TEST
