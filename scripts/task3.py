@@ -128,7 +128,18 @@ print("Cleaned dataset saved as: task3_cleaned.csv")
 #   - Eliminated Teams
 # ============================================================
 
+qualified = df[df["QUALIFIED"] == "YES"]["AVG_POSSESSION"]
+eliminated = df[df["QUALIFIED"] == "NO"]["AVG_POSSESSION"]
 
+print("\n=== DESCRIPTIVE STATISTICS ===")
+
+print("\n--- Qualified ---")
+print(f"Mean: {qualified.mean():.2f}")
+print(f"Std: {qualified.std():.2f}")
+
+print("\n--- Eliminated ---")
+print(f"Mean: {eliminated.mean():.2f}")
+print(f"Std: {eliminated.std():.2f}")
 
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
