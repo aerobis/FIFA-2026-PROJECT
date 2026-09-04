@@ -92,6 +92,19 @@ possession_cols = [
 ]
 
 
+# REMOVE PERCENTAGE SYMBOLS FROM ROWS (IF ANY)
+# THEN CONVERT THE DATA TO NUMBERS
+for col in posession_cols:
+    if df[col].dtype == object:
+        df[col] = df[col].astype(str).str.replace('%', '', regex=True)
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+    
+# STANDARDIZE QUALIFIED
+df["QUALIFIED"] = df["QUALIFIED"].astype(str).str.strip().str.upper()
+
+print("\n--- 5. VALIDATE QUALIFICATION STATUS ---")
+print(df["QUALIFIED"].value_counts())
+
 # ============================================================
 # DERIVED VARIABLE
 # ============================================================
