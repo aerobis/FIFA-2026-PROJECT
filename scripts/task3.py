@@ -94,7 +94,7 @@ possession_cols = [
 
 # REMOVE PERCENTAGE SYMBOLS FROM ROWS (IF ANY)
 # THEN CONVERT THE DATA TO NUMBERS
-for col in posession_cols:
+for col in possession_cols:
     if df[col].dtype == object:
         df[col] = df[col].astype(str).str.replace('%', '', regex=True)
     df[col] = pd.to_numeric(df[col], errors='coerce')
