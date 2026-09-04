@@ -69,8 +69,13 @@ df.columns = (
     .str.replace("(" , "", regex=False)
     .str.replace(")" , "", regex=False)
     .str.replace("%" , "", regex=False)
+    # FOR WHEN THERE'S MULTIPLE UNDERSCORES
+    .str.replace("_+", "_", regex=False) 
+    # REMOVE TRAILING UNDERSCORES
+    .str.strip("_") 
 )
 
+print("Cleaned Columns: ", df.columns.tolist())
 
 print("\n--- 1. NUMBER OF OBSERVATIONS ---")
 print(f"Total rows: {len(df)}")
