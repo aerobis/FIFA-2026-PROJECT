@@ -109,13 +109,16 @@ print(df["QUALIFIED"].value_counts())
 # DERIVED VARIABLE
 # ============================================================
 
-
+df["AVG_POSSESSION"] = df[possession_cols].mean(axis=1)
 
 # -------------------------------
 # SAVE CLEANED DATASET
 # -------------------------------
 
+print("\n--- SAVE CLEANED DATASET --")
+df.to_csv("data/cleaned/task3_cleaned.csv", index=False)
 
+print("Cleaned dataset saved as: task3_cleaned.csv")
 
 # ============================================================
 # 4. DESCRIPTIVE STATISTICS
