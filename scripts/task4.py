@@ -18,7 +18,7 @@
 #
 # Hypotheses:
 # Null Hypothesis (H0): μ_midfielders = μ_forwards
-# Alternate Hypothesis (H1): μ_midfielders > μ_forwards
+# Alternate Hypothesis (H1): μ_midfielders != μ_forwards
 #
 # ============================================================
 
@@ -233,8 +233,8 @@ alpha = 0.05
 print("\n === CONCLUSION ===")
 
 if p_val < alpha:
-    print("We reject the null hypothesis. (There is a significant difference in assists per 90 minutes between midfielders and forwards)")
+    print("We reject the null hypothesis. (Midfielders do have significantly more assists per 90 minutes than Forwards.")
 else:
-    print("We accept the null hypothesis. (There is not a significant difference in assists per 90 minutes between midfielders and forwards)")
+    print("We accept the null hypothesis. (Midfielders do not have significantly more assists per 90 minutes than Forwards.)")
 
 
