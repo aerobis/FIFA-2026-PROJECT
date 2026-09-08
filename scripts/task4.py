@@ -100,7 +100,7 @@ df["POSITION"] = df["POSITION"].astype(str).str.strip()
 # -------------------------------------
 # CLEANING NUMERICAL COLUMNS
 # -------------------------------------
-df["ASSISTS"] = pd.to_numeric(df["MINUTES"], errors="coerce")
+df["ASSISTS"] = pd.to_numeric(df["ASSISTS"], errors="coerce")
 df["MINUTES"] = pd.to_numeric(df["MINUTES"], errors="coerce")
 
 # -------------------------------------
