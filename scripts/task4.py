@@ -72,10 +72,57 @@ print(raw_data.head())
 #
 # ============================================================
 
+df = raw_data.copy()
+
+# -------------------------------------
+# STANDARDIZE DATASET
+# -------------------------------------
+df.columns = df.columns.str.strip().str.upper().str.replace(" ", "_")
+
+print("\n--- CLEANED COLUMN NAMES ---")
+print(df.columns)
+
+# -------------------------------------
+# BASIC DATA VALIDATION
+# -------------------------------------
+print("\n--- DATASET VALIDATION CHECK ---")
+print(f"Total player recors: {len(df)}")
+print(f"Total missing values: {df.isnull().sum().sum()}")
+print(f"Duplicate rows: {df.duplicated().sum()}")
+
+# -------------------------------------
+# CLEANING TEXT COLUMNS
+# -------------------------------------
+df["PLAYER"] = df["PLAYER"].astype(str).str.strip()
+df["TEAM"] = df["TEAM"].astype(str).str.strip()
+df["POSITION"] = df["POSITION"].astype(str).str.strip()
+
+# -------------------------------------
+# CLEANING NUMERICAL COLUMNS
+# -------------------------------------
+df["ASSISTS"] = pd.to_numeric(df["MINUTES"], errors="coerce")
+df["MINUTES"] = pd.to_numeric(df["MINUTES"], errors="coerce")
+
+# -------------------------------------
+# HANDLE MISSING VALUES
+# -------------------------------------
+print("\n--- MISSING VALUES (If any) ---")
+print(df.isnull().sum())
+
+df.dropna(subset = ["MINUTES", "ASSISTS", "POSITION"])
+
+# =========================
+# REMOVE INVALID DATA
+# =========================
+df = df[df["MINUTES"] > 0]
+
+# PLAYERS WITH LESS THAN 90 MINUTES OF PLAYTIME ARE NOT CONSIDERED
+df = df[df["MINUTES"] >= 90]
 
 # ============================================================
 # DERIVED VARIABLE
 # ============================================================
+
 
 
 # ============================================================
