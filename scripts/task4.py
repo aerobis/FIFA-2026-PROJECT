@@ -143,6 +143,19 @@ print("Cleaned dataset saved as: task4_cleaned.csv")
 #   - FORWARDS
 # ============================================================
 
+#SPLIT GROUPS
+mf = df[df["POSITION"] == "MIDFIELDER"]["ASSISTS_PER_90"]
+fw = df[df["POSITION"] == "FORWARD"]["ASSISTS_PER_90"]
+
+print('\n=== DESCRIPTIVE STATISTICS ===')
+
+print('\n--- MIDFIELDERS ---')
+print(f"Mean: {mf.mean():.4f}")
+print(f"Standard Deviation: {mf.std():.4f}")
+
+print('\n--- FORWARDS ---')
+print(f"Mean: {fw.mean():.4f}")
+print(f"Standard Deviation: {fw.std():.4f}")
 
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
@@ -157,6 +170,37 @@ print("Cleaned dataset saved as: task4_cleaned.csv")
 #
 # ============================================================
 
+print('\n === CONFIDENCE INTERVAL (95%) === ')
+
+# MIDFIELDERS CI
+n_mf = mf.count()
+mean_mf = mf.mean()
+sem_mf = stats.sem(mf)
+
+ci_mf = stats.t.interval(
+    0.95,
+    df = n_mf - 1, 
+    loc = mean_mf,
+    scale = sem_mf 
+)
+
+print("\n --- MIDFIELDERS ---")
+print(f"95% CI: [{ci_mf[0]:.4f}, {ci_mf[1]:.4f}]")
+
+# FORWARDS CI
+n_fw = fw.count()
+mean_fw = fw.mean()
+sem_fw = stats.sem(fw)
+
+ci_fw = stats.t.interval(
+    0.95, 
+    df = n_fw - 1,
+    loc = mean_fw,
+    scale = sem_fw
+)
+
+print("\n --- FORWARDS ---")
+print(f"95% CI: [{ci_fw[0]:.4f}, {ci_fw[1]:.4f}]")
 
 # ============================================================
 # 6. INFERENTIAL STATISTICS: TWO-SAMPLE T-TEST
