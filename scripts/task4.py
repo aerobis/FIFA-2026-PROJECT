@@ -109,7 +109,7 @@ df["MINUTES"] = pd.to_numeric(df["MINUTES"], errors="coerce")
 print("\n--- MISSING VALUES (If any) ---")
 print(df.isnull().sum())
 
-df.dropna(subset = ["MINUTES", "ASSISTS", "POSITION"])
+df = df.dropna(subset = ["MINUTES", "ASSISTS", "POSITION"])
 
 # =========================
 # REMOVE INVALID DATA
@@ -213,9 +213,28 @@ print(f"95% CI: [{ci_fw[0]:.4f}, {ci_fw[1]:.4f}]")
 #
 # ============================================================
 
+t_stat, p_val = stats.ttest_ind(
+    mf,
+    fw,
+    equal_var = False
+)
+
+print("\n=== T-TEST RESULTS ===")
+print(f"T-statistic (T*): {t_stat:.4f}")
+print(f"P-value: {p_val:.4f}")
+
 
 # ============================================================
 # CONCLUSION
 # ============================================================
 
-# alpha = 0.05
+alpha = 0.05
+
+print("\n === CONCLUSION ===")
+
+if p_val < alpha:
+    print("We reject the null hypothesis. (There is a significant difference in assists per 90 minutes between midfielders and forwards)")
+else:
+    print("We accept the null hypothesis. (There is not a significant difference in assists per 90 minutes between midfielders and forwards)")
+
+
