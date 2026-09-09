@@ -24,6 +24,7 @@
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import stats
 
 # ============================================================
@@ -226,6 +227,20 @@ for stage in ["GROUP", "KNOCKOUT"]:
     print(f"Median: {median:.4f}")
     print(f"IQR: {iqr:.4f}")
     print(f"Skewness: {skew:.4f}")
+
+# VISUALIZATION: GOAL-PER-SHOT EFFICIENCY
+group_efficiency = df[df["STAGE"] == "GROUP"]["GOALS_PER_SHOT"]
+knockout_efficiency = df[df["STAGE"] == "KNOCKOUT"]["GOALS_PER_SHOT"]
+
+plt.boxplot(
+    [group_efficiency, knockout_efficiency],
+    labels=["Group Stage", "Knockout Stage"]
+)
+plt.title("Goal-per-Shot Efficiency by Stage")
+plt.xlabel("Match Stage")
+plt.ylabel("Goals per Shot")
+plt.tight_layout()
+plt.show()
 
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
