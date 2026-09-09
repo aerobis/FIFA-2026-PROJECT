@@ -23,6 +23,7 @@
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import stats
 
 # ============================================================
@@ -135,10 +136,32 @@ print('\n === Group Breakdown (On basis of Goals Per Match) === ')
 grouped_stats = df.groupby('QUALIFIED')['GOALS_PER_MATCH'].agg(['count', 'mean', 'std'])
 print(grouped_stats.round(4))
 
+# VISUALIZATION: GOALS PER MATCH BY QUALIFICATION STATUS
+# MAP ELIMINATED TEAM SCATTERPOINTS TO POSITION X = 0, QUALIFIED TO X = 1
+qualified_status = df['QUALIFIED'].map({'NO': 0, 'YES': 1})
+# INTRODUCE JITTER TO MAKE DATA POINTS AS VISIBLE AS POSSIBLE
+jitter = np.linspace(-0.1, 0.1, len(df))
+
+plt.scatter(
+    qualified_status + jitter,
+    df['GOALS_PER_MATCH'],
+    c=df['QUALIFIED'].map({'NO': '#D95F02', 'YES': '#2E8B57'}),
+    alpha=0.75,
+    edgecolors='black',
+    linewidths=0.5
+)
+plt.xticks([0, 1], ['Eliminated', 'Qualified'])
+plt.xlabel('Qualification Status')
+plt.ylabel('Goals per Match')
+plt.title('Goals per Match by Qualification Status')
+plt.grid(axis='y', alpha=0.3)
+plt.tight_layout()
+plt.show()
+
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
 # 95% Confidence Interval for mean goals per match 
-# Formula for calculating CI:
+# Formula for calculasing CI:
 # mean +- t * (std / sqrt(n))
 # ============================================================
 
