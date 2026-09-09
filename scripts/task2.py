@@ -60,6 +60,27 @@ print(raw_data.head())
 
 df = raw_data.copy()
 
+# ============================================================
+# DATA VALIDATION CHECKS
+# ============================================================
+
+# -------------------------------------
+# STANDARDIZE DATASET
+# -------------------------------------
+df.columns = df.columns.str.strip().str.upper().str.replace(" ", "_")
+
+print("\n--- CLEANED COLUMN NAMES ---")
+print(df.columns)
+
+# CHECK REQUIRED COLUMNS
+required_columns = ["TEAM", "STAGE", "GOALS", "SHOTS"]
+assert set(required_columns).issubset(df.columns), \
+    "Error: Required columns are missing"
+
+# CHECK TOTAL NUMBER OF OBSERVATIONS
+assert len(df) == 64, \
+    "Error: Dataset must contain 64 observations"
+
 # -------------------------------
 # BASIC DATA CHECKS
 # -------------------------------
@@ -102,9 +123,8 @@ print(df.dtypes)
 print("\n--- 6. VALIDATE STAGE VALUES ---")
 unique_stages = df["STAGE"].unique()
 print(f"Unique values in STAGE column: {unique_stages}")
-
-invalid_stage = df[~df["STAGE"].isin(["GROUP", "KNOCKOUT"])]
-print(f"Rows with invalid STAGE values: {len(invalid_stage)}")
+assert set(unique_stages).issubset({"GROUP", "KNOCKOUT"}), \
+    "Error: STAGE contains invalid values"
 
 # -------------------------------
 # VALIDATE COLUMN DETAILS TO ENSURE DATA INTEGRITY AND CONSISTENCY
@@ -113,13 +133,15 @@ print(f"Rows with invalid STAGE values: {len(invalid_stage)}")
 print("\n--- 7. CHECK NUMBER OF UNIQUE TEAMS ---")
 unique_teams = df["TEAM"].nunique()
 print(f"Unique teams (should be 32): {unique_teams}")
+assert unique_teams == 32, \
+    "Error: Dataset must contain 32 unique teams"
 
 print("\n--- 8. CHECK EACH TEAM APPEARS EXACTLY TWICE ---")
 team_counts = df["TEAM"].value_counts()
 invalid_team_counts = team_counts[team_counts != 2]
 print(f"Teams not appearing exactly twice: {len(invalid_team_counts)}")
-if len(invalid_team_counts) > 0:
-    print(invalid_team_counts)
+assert len(invalid_team_counts) == 0, \
+    "Error: Each team must appear exactly twice"
 
 print("\n--- 9. CHECK EACH TEAM HAS BOTH GROUP AND KNOCKOUT ---")
 stage_check = df.groupby("TEAM")["STAGE"].apply(set)
@@ -129,19 +151,28 @@ invalid_stage_pairs = stage_check[
 print(f"Teams missing GROUP or KNOCKOUT row: {len(invalid_stage_pairs)}")
 if len(invalid_stage_pairs) > 0:
     print(invalid_stage_pairs)
+assert len(invalid_stage_pairs) == 0, \
+    "Error: Each team must have one GROUP and one KNOCKOUT row"
 
 print("\n--- 10. CHECK FOR NEGATIVE GOALS OR SHOTS ---")
 invalid_numbers = df[(df["GOALS"] < 0) | (df["SHOTS"] < 0)]
 print(f"Rows with negative GOALS/SHOTS: {len(invalid_numbers)}")
+assert len(invalid_numbers) == 0, \
+    "Error: GOALS and SHOTS cannot be negative"
+
+# CHECK FOR MISSING OR ZERO SHOT VALUES
+assert not df[["TEAM", "STAGE", "GOALS", "SHOTS"]].isnull().any().any(), \
+    "Error: Missing or non-numeric values detected"
+assert (df["SHOTS"] > 0).all(), \
+    "Error: SHOTS must be greater than zero"
+
+print("\nData validation checks passed.")
 
 # -------------------------------
-# SANITIZE DUPLICATED THROUGH REMOVAL
+# FINAL DATA CHECK
 # -------------------------------
 
-print("\n--- 11. REMOVE EXACT DUPLICATES ---")
-df = df.drop_duplicates(subset=["TEAM", "STAGE"], keep="first")
-
-print("\n--- 12. FINAL MISSING VALUE CHECK ---")
+print("\n--- FINAL MISSING VALUE CHECK ---")
 print(df.isnull().sum())
 
 # ============================================================
@@ -149,6 +180,8 @@ print(df.isnull().sum())
 # ============================================================
 
 df["GOALS_PER_SHOT"] = df["GOALS"] / df["SHOTS"]
+assert df["GOALS_PER_SHOT"].notnull().all(), \
+    "Error: GOALS_PER_SHOT contains missing values"
 
 print("\n--- Derived Variable Check ---")
 print(df[["TEAM", "STAGE", "GOALS_PER_SHOT"]].head())
@@ -210,7 +243,7 @@ ko_data = df[df["STAGE"] == "KNOCKOUT"].sort_values("TEAM").reset_index(drop=Tru
 # COMPUTE THE DIFFERENCE
 diff = ko_data["GOALS_PER_SHOT"] - group_data["GOALS_PER_SHOT"]
 
-n = len(data)
+n = len(diff)
 mean_diff = diff.mean()
 sem_diff = stats.sem(diff)
 
