@@ -82,6 +82,11 @@ df.columns = df.columns.str.strip().str.upper().str.replace(" ", "_")
 print("\n--- CLEANED COLUMN NAMES ---")
 print(df.columns)
 
+# CHECK REQUIRED COLUMNS
+required_columns = ["PLAYER", "TEAM", "POSITION", "ASSISTS", "MINUTES"]
+assert set(required_columns).issubset(df.columns), \
+    "Error: Required columns are missing"
+
 # -------------------------------------
 # BASIC DATA VALIDATION
 # -------------------------------------
@@ -95,7 +100,7 @@ print(f"Duplicate rows: {df.duplicated().sum()}")
 # -------------------------------------
 df["PLAYER"] = df["PLAYER"].astype(str).str.strip()
 df["TEAM"] = df["TEAM"].astype(str).str.strip()
-df["POSITION"] = df["POSITION"].astype(str).str.strip()
+df["POSITION"] = df["POSITION"].astype(str).str.strip().str.upper()
 
 # -------------------------------------
 # CLEANING NUMERICAL COLUMNS
@@ -103,18 +108,35 @@ df["POSITION"] = df["POSITION"].astype(str).str.strip()
 df["ASSISTS"] = pd.to_numeric(df["ASSISTS"], errors="coerce")
 df["MINUTES"] = pd.to_numeric(df["MINUTES"], errors="coerce")
 
+# ============================================================
+# DATA VALIDATION CHECKS
+# ============================================================
+
+# CHECK VALID POSITION VALUES
+assert set(df["POSITION"].unique()).issubset({"MIDFIELDER", "FORWARD"}), \
+    "Error: POSITION contains invalid values"
+
+# CHECK FOR MISSING VALUES AFTER CONVERSION
+assert not df[["PLAYER", "TEAM", "POSITION", "ASSISTS", "MINUTES"]].isnull().any().any(), \
+    "Error: Missing or invalid values detected"
+
+# CHECK FOR NEGATIVE VALUES
+assert (df["ASSISTS"] >= 0).all(), \
+    "Error: ASSISTS cannot be negative"
+assert (df["MINUTES"] > 0).all(), \
+    "Error: MINUTES must be greater than zero"
+
+# CHECK FOR DUPLICATE PLAYER RECORDS
+assert df.duplicated(subset=["PLAYER", "TEAM"]).sum() == 0, \
+    "Error: Duplicate player records detected"
+
+print("\n Data validation checks passed.")
+
 # -------------------------------------
 # HANDLE MISSING VALUES
 # -------------------------------------
 print("\n--- MISSING VALUES (If any) ---")
 print(df.isnull().sum())
-
-df = df.dropna(subset = ["MINUTES", "ASSISTS", "POSITION"])
-
-# =========================
-# REMOVE INVALID DATA
-# =========================
-df = df[df["MINUTES"] > 0]
 
 # PLAYERS WITH LESS THAN 90 MINUTES OF PLAYTIME ARE NOT CONSIDERED
 df = df[df["MINUTES"] >= 90]
@@ -124,6 +146,14 @@ df = df[df["MINUTES"] >= 90]
 # ============================================================
 df["ASSISTS_PER_90"] = (df["ASSISTS"] / df["MINUTES"]) * 90
 df["ASSISTS_PER_90"] = df["ASSISTS_PER_90"].round(4)
+
+# CHECK DERIVED VARIABLE
+assert df["ASSISTS_PER_90"].notnull().all(), \
+    "Error: ASSISTS_PER_90 contains missing values"
+assert (df["ASSISTS_PER_90"] >= 0).all(), \
+    "Error: ASSISTS_PER_90 cannot be negative"
+
+print("Derived variable validation passed.")
 
 # -------------------------------
 # SAVE CLEANED DATASET
@@ -146,6 +176,9 @@ print("Cleaned dataset saved as: task4_cleaned.csv")
 #SPLIT GROUPS
 mf = df[df["POSITION"] == "MIDFIELDER"]["ASSISTS_PER_90"]
 fw = df[df["POSITION"] == "FORWARD"]["ASSISTS_PER_90"]
+
+assert len(mf) > 0, "Error: No midfielder observations available"
+assert len(fw) > 0, "Error: No forward observations available"
 
 print('\n=== DESCRIPTIVE STATISTICS ===')
 
