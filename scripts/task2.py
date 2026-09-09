@@ -7,7 +7,7 @@
 # 1. Analytic Question Formulation
 # ============================================================
 # Research Question:
-# Do teams that qualify for the Kncokout Stags have a significant difference in 
+# Do teams that qualify for the Knockout Stags have a significant difference in 
 # the goal-per-shot efficiency between the Group Stages and Knockout stages?
 #
 # Variables:
@@ -289,6 +289,6 @@ alpha = 0.05
 print("\n<=== CONCLUSION ===>")
 
 if p_val < alpha:
-    print("We reject the null hypothesis. (There is a significant difference in the goal-per-shot efficiency of teams between Group and Knockout Stages.)")
+    print("We reject the null hypothesis. There is sufficient evidence to conclude that there is a significant difference in goal-per-shot efficiency of teams between stages.")
 else:
-    print("We accept the null hpothesis. (There is no significant difference in goal-per-shot efficiency of teams between stages.)")
+    print("We fail to reject the null hpothesis. There is insufficient evidence to suggest that there is a significant difference in goal-per-shot efficiency of teams between stages.")
