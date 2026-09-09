@@ -243,6 +243,6 @@ alpha = 0.05
 print("\n === CONCLUSION ===")
 
 if p_val < alpha:
-    print("We reject the null hypothesis. There is sufficient evidence to suggest that Qualified Teams have a significantly higher ball possession rate on average than Eliminated Teams.")
+    print("We reject the null hypothesis. There is sufficient evidence to conclude that Qualified Teams have a significantly higher ball possession rate on average than Eliminated Teams.")
 else:
     print("We fail to reject the null hypothesis. There is insufficient evidence to suggest that Qualified Teams have a significantly higher ball possession rate on average than Eliminated Teams.")

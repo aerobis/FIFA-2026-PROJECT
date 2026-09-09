@@ -202,6 +202,6 @@ print(f'\t P-value (one-sided): {p_val}')
 
 print("\n <===== CONCLUSION =====>")
 if p_val < 0.05:
-    print("We reject the null hypothesis. (Qualified Teams score significantly more goals per match than teams that are Eliminated.)")
+    print("We reject the null hypothesis. There is sufficient evidence to conclude that Qualified Teams score significantly more goals per match on average than teams that are Eliminated.")
 else:
-    print("We accept the null hypothesis. (Qualified Teams do not score significantly more goals per match than teams that are Eliminated.)")
+    print("We fail to reject the null hypothesis. There is insufficient evidence to suggest that Qualified Teams score significantly more goals per match on average than teams that are Eliminated.")
