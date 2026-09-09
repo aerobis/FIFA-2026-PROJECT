@@ -206,7 +206,7 @@ print(f"95% CI: [{ci_fw[0]:.4f}, {ci_fw[1]:.4f}]")
 # 6. INFERENTIAL STATISTICS: TWO-SAMPLE T-TEST
 # ============================================================
 
-# Use Welch’s Two-Sample T-Test (unequal variance is assumed)
+# Use Welch’s Independent Two-Sample T-Test (unequal variance is assumed)
 #
 # Compare:
 #   MIDFIELDERS vs FORWARDS (ASSISTS_PER_90)
@@ -234,7 +234,7 @@ alpha = 0.05
 print("\n === CONCLUSION ===")
 
 if p_val < alpha:
-    print("We reject the null hypothesis. There is sufficient evidence to suggest Midfielders have a higher average assists per 90 rate than Forwards.")
+    print("We reject the null hypothesis. There is sufficient evidence to conclude that Midfielders have a higher average assists per 90 rate than Forwards.")
 else:
     print("We fail to reject the null hypothesis. There is insufficient evidence to suggest Midfielders have higher assists per 90 than Forwards.")
 
