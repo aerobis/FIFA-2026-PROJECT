@@ -22,6 +22,7 @@
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import stats
 
 # ============================================================
@@ -191,6 +192,17 @@ print(f"Std: {qualified.std():.2f}")
 print("\n--- Eliminated ---")
 print(f"Mean: {eliminated.mean():.2f}")
 print(f"Std: {eliminated.std():.2f}")
+
+# VISUALIZATION: AVERAGE POSSESSION BY QUALIFICATION STATUS
+plt.boxplot(
+    [qualified, eliminated],
+    tick_labels=["Qualified", "Eliminated"]
+)
+plt.title("Average Ball Possession by Qualification Status")
+plt.xlabel("Qualification Status")
+plt.ylabel("Average Ball Possession (%)")
+plt.tight_layout()
+plt.show()
 
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
