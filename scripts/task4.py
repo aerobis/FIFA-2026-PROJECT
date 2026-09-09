@@ -216,7 +216,8 @@ print(f"95% CI: [{ci_fw[0]:.4f}, {ci_fw[1]:.4f}]")
 t_stat, p_val = stats.ttest_ind(
     mf,
     fw,
-    equal_var = False
+    equal_var = False,
+    alternative = "greater"
 )
 
 print("\n=== T-TEST RESULTS ===")
