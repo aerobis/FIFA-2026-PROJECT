@@ -234,7 +234,7 @@ knockout_efficiency = df[df["STAGE"] == "KNOCKOUT"]["GOALS_PER_SHOT"]
 
 plt.boxplot(
     [group_efficiency, knockout_efficiency],
-    labels=["Group Stage", "Knockout Stage"]
+    tick_labels=["Group Stage", "Knockout Stage"]
 )
 plt.title("Goal-per-Shot Efficiency by Stage")
 plt.xlabel("Match Stage")
