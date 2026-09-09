@@ -29,6 +29,7 @@
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import stats
 
 
@@ -189,6 +190,28 @@ print(f"Standard Deviation: {mf.std():.4f}")
 print('\n--- FORWARDS ---')
 print(f"Mean: {fw.mean():.4f}")
 print(f"Standard Deviation: {fw.std():.4f}")
+
+# VISUALIZATION: PLAYER MEANS AND 95% CONFIDENCE INTERVALS
+mf_ci = stats.sem(mf) * stats.t.ppf(0.975, len(mf) - 1)
+fw_ci = stats.sem(fw) * stats.t.ppf(0.975, len(fw) - 1)
+
+plt.bar(
+    ['MIDFIELDER', 'FORWARD'],
+    [mf.mean(), fw.mean()],
+    yerr=[mf_ci, fw_ci],
+    capsize=5,
+    color=['#2B5C8F', '#D9534F'],
+    alpha=0.8
+)
+
+np.random.seed(42)
+plt.scatter(np.random.normal(0, 0.05, len(mf)), mf, color='black', alpha=0.2, s=15)
+plt.scatter(np.random.normal(1, 0.05, len(fw)), fw, color='black', alpha=0.2, s=15)
+plt.title('Player-Level Assists per 90 (Mean with 95% CI)')
+plt.xlabel('Player Position')
+plt.ylabel('Assists per 90 minutes')
+plt.tight_layout()
+plt.show()
 
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
