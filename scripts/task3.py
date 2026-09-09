@@ -110,11 +110,57 @@ df["QUALIFIED"] = df["QUALIFIED"].astype(str).str.strip().str.upper()
 print("\n--- 5. VALIDATE QUALIFICATION STATUS ---")
 print(df["QUALIFIED"].value_counts())
 
+# CHECK REQUIRED COLUMNS
+required_columns = [
+    "TEAM",
+    "QUALIFIED",
+    "MATCH_1_POSSESSION",
+    "MATCH_2_POSSESSION",
+    "MATCH_3_POSSESSION"
+]
+
+assert set(required_columns).issubset(df.columns), \
+    "Error: Required columns are missing"
+
+# CHECK TOTAL NUMBER OF TEAMS
+assert len(df) == 48, \
+    "Error: Dataset must contain 48 teams"
+
+# CHECK UNIQUE TEAMS
+assert df["TEAM"].nunique() == 48, \
+    "Error: Duplicate teams detected"
+
+# CHECK QUALIFICATION VALUES
+assert set(df["QUALIFIED"].unique()).issubset({"YES", "NO"}), \
+    "Error: QUALIFIED contains invalid values"
+
+# CHECK QUALIFICATION DISTRIBUTION
+assert (df["QUALIFIED"] == "YES").sum() == 32, \
+    "Error: 32 teams should have qualified"
+
+assert (df["QUALIFIED"] == "NO").sum() == 16, \
+    "Error: 16 teams should have been eliminated"
+
+# CHECK FOR MISSING VALUES AFTER CONVERSION
+assert not df[possession_cols].isnull().any().any(), \
+    "Error: Missing or non-numeric possession values detected"
+
+# CHECK POSSESSION VALUES ARE VALID PERCENTAGES
+assert ((df[possession_cols] >= 0) & (df[possession_cols] <= 100)).all().all(), \
+    "Error: Possession values must be between 0 and 100"
+
+print("\n Data validation checks passed.")
+
 # ============================================================
 # DERIVED VARIABLE
 # ============================================================
 
 df["AVG_POSSESSION"] = df[possession_cols].mean(axis=1).round(4)
+
+assert ((df["AVG_POSSESSION"] >= 0) & (df["AVG_POSSESSION"] <= 100)).all(), \
+    "Error: AVG_POSSESSION must be between 0 and 100"
+
+print("Derived variable validation passed.")
 
 # -------------------------------
 # SAVE CLEANED DATASET
