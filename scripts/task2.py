@@ -16,7 +16,7 @@
 #
 # Hypotheses:
 # Null Hypotehsis (H0): μ_diff = 0
-# Alternate Hypothesis (h1): μ_diff != 0
+# Alternate Hypothesis (H1): μ_diff != 0
 # where μ_diff = (Knockout - Group) efficiency
 # ============================================================
 
