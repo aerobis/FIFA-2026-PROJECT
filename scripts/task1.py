@@ -12,7 +12,7 @@
 #
 # Variables:
 # Independent Variable   ->      Qualification Status (Yes or No)
-# Dependent Variable     ->      Goal on Average (Goal per match) for Group Stage
+# Dependent Variable     ->      Average goals per match during the Group Stages
 #
 # Hypotheses:
 # Null Hypotehsis (H0): μ_qualified = μ_eliminated
@@ -139,7 +139,7 @@ print(grouped_stats.round(4))
 # VISUALIZATION: GOALS PER MATCH BY QUALIFICATION STATUS
 # MAP ELIMINATED TEAM SCATTERPOINTS TO POSITION X = 0, QUALIFIED TO X = 1
 qualified_status = df['QUALIFIED'].map({'NO': 0, 'YES': 1})
-# INTRODUCE JITTER TO MAKE DATA POINTS AS VISIBLE AS POSSIBLE
+# INTRODUCE JITTER TO MREDUCE OVERLAPPING DATA POINTS
 jitter = np.linspace(-0.1, 0.1, len(df))
 
 plt.scatter(
@@ -161,7 +161,7 @@ plt.show()
 # ============================================================
 # 5. INFERENTIAL STATISTICS: CONFIDENCE INTERVAL
 # 95% Confidence Interval for mean goals per match 
-# Formula for calculasing CI:
+# Formula for calculating CI:
 # mean +- t * (std / sqrt(n))
 # ============================================================
 
