@@ -8,7 +8,7 @@
 # ============================================================
 # Research Question:
 # Do teams that qualify for the Knockout Stages have a significantly higher ball possession 
-# time on average than teams that are eliminated in the Group Stage?
+# percentage on average than teams that are eliminated in the Group Stage?
 # Variables:
 # Independent Variable   ->      Qualification Status (YES/NO)
 # Dependent Variable     ->      Average Ball Possession (%)
@@ -155,14 +155,14 @@ print(f"Std: {eliminated.std():.2f}")
 
 ci_qual = stats.t.interval(
     0.95,
-    df = len(qualified - 1),
+    df = len(qualified) - 1, # Number of observations - 1
     loc = qualified.mean(),
     scale = stats.sem(qualified)
 )
 
 ci_elim = stats.t.interval(
     0.95,
-    df = len(eliminated - 1),
+    df = len(eliminated) - 1,
     loc = eliminated.mean(),
     scale = stats.sem(eliminated)
 )
@@ -172,9 +172,9 @@ print(f"Qualified CI: [{ci_qual[0]:.2f}, {ci_qual[1]:.2f}]")
 print(f"Eliminated CI: [{ci_elim[0]:.2f}, {ci_elim[1]:.2f}]")
 
 # ============================================================
-# 6. INFERENTIAL STATISTICS: PAIRED T-TEST
+# 6. INFERENTIAL STATISTICS: INDEPENDENT TWO-SAMPLE T-TEST
 # ============================================================
-# Welch's T-Test used due to independent groups being observed
+# WELCH'S INDEPENDENT TWO-SAMPLE T-TEST WAS EMPLOYED
 # ============================================================
 
 t_stat, p_val = stats.ttest_ind(
@@ -199,4 +199,4 @@ print("\n === CONCLUSION ===")
 if p_val < alpha:
     print("We reject the null hypothesis. (Qualified teams have significantly higher ball possession rates than eliminated teams)")
 else:
-    print("We accept the null hypothesis. (Qualified teams do not have significantly higher ball possession rates than eliminated teams)")
+    print("We fail to reject the null hypothesis. (Qualified teams do not have significantly higher ball possession rates than eliminated teams)")
