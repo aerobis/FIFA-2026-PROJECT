@@ -14,7 +14,7 @@
 # Dependent Variable     ->      Average Ball Possession (%)
 #
 # Hypotheses:
-# Null Hypotehsis (H0): μ_qualified = μ_eliminated
+# Null Hypothesis (H0): μ_qualified = μ_eliminated
 # Alternate Hypothesis (H1): μ_qualified > μ_eliminated
 # ============================================================
 

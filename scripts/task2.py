@@ -306,4 +306,4 @@ print("\n<=== CONCLUSION ===>")
 if p_val < alpha:
     print("We reject the null hypothesis. There is sufficient evidence to conclude that there is a significant difference in goal-per-shot efficiency of teams between stages.")
 else:
-    print("We fail to reject the null hpothesis. There is insufficient evidence to suggest that there is a significant difference in goal-per-shot efficiency of teams between stages.")
+    print("We fail to reject the null hypothesis. There is insufficient evidence to suggest that there is a significant difference in goal-per-shot efficiency of teams between stages.")
