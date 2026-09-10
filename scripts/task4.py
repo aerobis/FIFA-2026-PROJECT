@@ -92,7 +92,7 @@ assert set(required_columns).issubset(df.columns), \
 # BASIC DATA VALIDATION
 # -------------------------------------
 print("\n--- DATASET VALIDATION CHECK ---")
-print(f"Total player recors: {len(df)}")
+print(f"Total player records: {len(df)}")
 print(f"Total missing values: {df.isnull().sum().sum()}")
 print(f"Duplicate rows: {df.duplicated().sum()}")
 
