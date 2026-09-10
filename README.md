@@ -15,13 +15,15 @@ The websites used for the project's data collection (as referred to by our profe
 - The Stats Don't Lie Website
 - FBRef Website
 
-The four dinstinct analytic questions have been mentioned below (subject to change):
+The four dinstinct analytic questions have been mentioned below:
 
 # TASK 1:
 Do teams that qualify for the knockout stages score significantly more goals on average than the teams that are eliminated in the Group Stage?
+(Adapted from ChatGPT, OpenAI, accessed 13/08/2026)
 
 # TASK 2:
 Do teams that qualify for the knockout stage have a significant difference in goal-per-shot efficiency between the group stages and knockout stages?
+(Adapted from ChatGPT, OpenAI, accessed 13/08/2026)
 
 # TASK 3:
 Do teams that qualify for the knockout stages have a significantly higher ball possession time on average than teams that get knocked out in the group stages?
@@ -30,7 +32,7 @@ Do teams that qualify for the knockout stages have a significantly higher ball p
 For teams that qualify for the knockout stages, do their midfielders average more assists (per 90 minutes) than their forwards?
 
 
-### DETAILS ####
+#### DETAILS ####
 
 # Role Division:
 
