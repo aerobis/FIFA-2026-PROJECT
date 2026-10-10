@@ -59,3 +59,5 @@ def make_team_info(context, squad, elo):
  
     if len(teams) != 48 or teams.isna().sum().sum() > 0:
         raise SystemExit("The team table should have 48 rows and no blanks.")
+
+    return teams.set_index("team").to_dict("index")
