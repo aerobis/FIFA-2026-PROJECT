@@ -185,3 +185,32 @@ def make_model_2_2(long):
         "is_uefa_conmebol": long["is_uefa_conmebol"],
         "goals_for": long["goals_for"],                      # target is last column
     })
+    
+def check_and_save(model_2_1, model_2_2, long):
+    # Print quick checks, stop if something is wrong, if not, then save the files
+    print("model_2_1 shape:", model_2_1.shape, "(should be 104, 10)")
+    print("model_2_2 shape:", model_2_2.shape, "(should be 208, 10)")
+    print("Blank cells:", model_2_1.isna().sum().sum(), model_2_2.isna().sum().sum(), "(should be 0 0)")
+ 
+    if model_2_1.shape != (104, 10) or model_2_2.shape != (208, 10):
+        raise SystemExit("Wrong number of rows or columns - check the input files.")
+    if model_2_1.isna().sum().sum() > 0 or model_2_2.isna().sum().sum() > 0:
+        raise SystemExit("There are blanks in the tables - check the input files.")
+ 
+    model_2_1.round(4).to_csv(os.path.join(FOLDER, "model_2_1.csv"), index=False)
+    model_2_2.round(4).to_csv(os.path.join(FOLDER, "model_2_2.csv"), index=False)
+    long.to_csv(os.path.join(FOLDER, "merged_long.csv"), index=False)
+    print("Saved model_2_1.csv, model_2_2.csv and merged_long.csv")
+ 
+ 
+def main():
+    matches, context, squad, elo = read_files()
+    check_team_names(matches, context, squad, elo)
+    info = make_team_info(context, squad, elo)
+    long = make_long_table(matches, info)
+    model_2_1 = make_model_2_1(long)
+    model_2_2 = make_model_2_2(long)
+    check_and_save(model_2_1, model_2_2, long)
+ 
+ 
+main()
