@@ -152,3 +152,22 @@ def make_long_table(matches, info):
     long = long.sort_values(["match_id", "side"]).reset_index(drop=True)
     print("Team-match rows:", len(long))
     return long
+
+def make_model_2_1(long):
+    # One row per match: Team A's value - Team B's value
+    A = long[long["side"] == "A"].set_index("match_id")
+    B = long[long["side"] == "B"].set_index("match_id")
+ 
+    table = pd.DataFrame({
+        "fifa_points_diff": A["fifa_points"] - B["fifa_points"],
+        "avg_caps_diff": A["avg_caps"] - B["avg_caps"],
+        "avg_age_diff": A["avg_age"] - B["avg_age"],
+        "host_diff": A["is_host"] - B["is_host"],
+        "knockout": A["knockout"],
+        "rest_days_diff": A["rest_days"] - B["rest_days"],
+        "gf_pg_diff": A["gf_pg"] - B["gf_pg"],
+        "ga_pg_diff": A["ga_pg"] - B["ga_pg"],
+        "goal_diff": A["goals_for"] - A["goals_against"],    # target becomes the last column
+    })
+    return table.reset_index()    # match_id becomes the first column
+
