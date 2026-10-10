@@ -171,3 +171,17 @@ def make_model_2_1(long):
     })
     return table.reset_index()    # match_id becomes the first column
 
+def make_model_2_2(long):
+    # One row per team per match
+    return pd.DataFrame({
+        "match_id": long["match_id"],
+        "own_elo": long["elo"],
+        "opp_elo": long["opp_elo"],
+        "own_qual_gf_pg": long["qual_gf_pg"],
+        "opp_qual_ga_pg": long["opp_qual_ga_pg"],
+        "is_host": long["is_host"],
+        "knockout": long["knockout"],
+        "rest_days": long["rest_days"],
+        "is_uefa_conmebol": long["is_uefa_conmebol"],
+        "goals_for": long["goals_for"],                      # target is last column
+    })
