@@ -51,3 +51,11 @@ def check_team_names(matches, context, squad, elo):
  
     print("Team names match in all files.")
 
+def make_team_info(context, squad, elo):
+    # Put everything known about each team in one dictionary
+    # Example: info["Spain"]["elo"] gives Spain's Elo rating
+    teams = context.merge(squad, on="team")
+    teams = teams.merge(elo, on="team")
+ 
+    if len(teams) != 48 or teams.isna().sum().sum() > 0:
+        raise SystemExit("The team table should have 48 rows and no blanks.")
