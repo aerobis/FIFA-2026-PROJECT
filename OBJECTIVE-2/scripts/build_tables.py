@@ -34,3 +34,20 @@ def read_files():
     print("Rows read:", len(matches), len(context), len(squad), len(elo))
     return matches, context, squad, elo
 
+def check_team_names(matches, context, squad, elo):
+    # Stop if a team is spelled differently in any file
+    # A merge on team name silently loses teams if the spelling differs
+    match_teams = set(matches["team_a"]) | set(matches["team_b"])
+ 
+    for name, table in [("team_context", context), ("team_squad", squad), ("team_elo_qual", elo)]:
+        table_teams = set(table["team"])
+        missing = match_teams - table_teams
+        extra = table_teams - match_teams
+        if len(missing) > 0 or len(extra) > 0:
+            print("NAME PROBLEM in", name)
+            print("  in matches.csv but not in", name + ":", sorted(missing))
+            print("  in", name, "but not in matches.csv:", sorted(extra))
+            raise SystemExit("Fix the team names above and run again.")
+ 
+    print("Team names match in all files.")
+
