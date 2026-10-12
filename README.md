@@ -8,6 +8,7 @@
 # SUSMITA SUBEDI                                            - S369901
 ###
 
+# OBJECTIVE 1
 This project aims to perform statistical calculations on various analytical questions relating to the FIFA World Cup 2026, with four distinct analytic tasks being derived for the same purpose.
 
 The websites used for the project's data collection (as referred to by our professor) are listed below:
@@ -48,3 +49,5 @@ For teams that qualify for the knockout stages, do their midfielders average mor
 4) Writing:
     Implementing the final file by joining and arranging code and data alike, documenting the code and the codebase, preparing the base for the Presentation
     # Handled by Shreyash
+
+# OBJECTIVE 2
