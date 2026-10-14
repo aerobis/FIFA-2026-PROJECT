@@ -92,7 +92,7 @@ Run from the OBJECTIVE-2 folder, in this order:
 4. python scripts/run_models.py       80/20 train/test split (random_state=0), baseline comparison and
                                       5-fold cross-validation for both models
 5. python scripts/figures.py          Figure 1 of the report (results/report_figure1.png)
-(scripts/build_elo_qual.py, if included, is the downloader that produced team_elo_qual.csv.)
+
 
 # Report notes
 Tables 2 and 3 of the report come from steps 2-4. Model 2.2's test split is by match, so both rows of a match stay in the same set.
