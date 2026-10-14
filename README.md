@@ -1,12 +1,10 @@
 # FIFA World Cup 2026: Group Stage Goals Analysis ###
 
-#
-## GROUP MEMBERS:
+# GROUP MEMBERS:
 ## SHREYASH UPRETI                                           - S406921
 ## JUNG-CHUAN CHIANG (Herein called Raymond in this project) - S406089
 ## SOBIT PAUDEL                                              - S403784
 ## SUSMITA SUBEDI                                            - S369901
-#
 
 # OBJECTIVE 1
 This project aims to perform statistical calculations on various analytical questions relating to the FIFA World Cup 2026, with four distinct analytic tasks being derived for the same purpose.
@@ -71,7 +69,7 @@ results/    everything the scripts write (summaries, metrics, coefficients, plot
                      its last match before 11 June 2026. Qualifying goals per game use World Cup
                      qualifiers from 1 Jan 2023 to 31 Dec 2025. The three hosts had no qualifying
                      campaign, so their last eight non-friendly matches before the tournament are used.
-Team names follow the FIFA spelling in matches.csv. build_tables.py stops if a name differs in any file.
+Team names follow the FIFA spelling in matches.csv. build_tables.py stops if a name differs in any file
 
 # Variables
 Model 2.1 (Team A minus Team B): fifa_points_diff, avg_caps_diff, avg_age_diff, host_diff,
@@ -86,13 +84,14 @@ Qualifying averages are not adjusted for opposition strength.
 # How to run
 Install: python -m pip install pandas scikit-learn statsmodels matplotlib seaborn
 Run from the OBJECTIVE-2 folder, in this order:
-1. python scripts/build_tables.py     builds data/model_2_1.csv, model_2_2.csv and merged_long.csv
-2. python scripts/model_2_1.py        Model 2.1 on all rows: OLS summary, VIF, Breusch-Pagan, diagnostic plots
-3. python scripts/model_2_2.py        Model 2.2 on all rows: same checks, plus p-values clustered by match
-4. python scripts/run_models.py       80/20 train/test split (random_state=0), baseline comparison and
-                                      5-fold cross-validation for both models
-5. python scripts/figures.py          Figure 1 of the report (results/report_figure1.png)
+1. python scripts/build_elo_qual.py   builds data/team_elo_qual.csv, team_elo_qual_checks.csv and host_matches_used.txt
+2. python scripts/build_tables.py     builds data/model_2_1.csv, model_2_2.csv and merged_long.csv
+3. python scripts/model_2_1.py        Model 2.1 on all rows: OLS summary, VIF, Breusch-Pagan, diagnostic plots
+4. python scripts/model_2_2.py        Model 2.2 on all rows: same checks, plus p-values clustered by match
+5. python scripts/run_models.py       80/20 train/test split (random_state=0), baseline comparison and
+                                      5 fold cross-validation for both models
+56. python scripts/figures.py         Figure 1 of the report (results/report_figure1.png)
 
 
 # Report notes
-Tables 2 and 3 of the report come from steps 2-4. Model 2.2's test split is by match, so both rows of a match stay in the same set.
+Tables 2 and 3 of the report come from steps 2-4. Model 2.2's test split is by match, so both rows of a match stay in the same set
