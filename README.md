@@ -45,7 +45,7 @@ For teams that qualify for the knockout stages, do their midfielders average mor
     ### Handled by Sobit
 ## 3) Analytics:
     Doing the relevant calculations required for the task
-    # Handled by Shreyash and Raymond
+    ### Handled by Shreyash and Raymond
 ## 4) Writing:
     Implementing the final file by joining and arranging code and data alike, documenting the code and the codebase, preparing the base for the Presentation
     ### Handled by Shreyash
