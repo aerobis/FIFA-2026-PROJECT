@@ -1,0 +1,48 @@
+model_2_2 - target: goals_for
+Training rows: 166 | Test rows: 42 | random_state=0
+
+Test-set performance (model vs mean baseline):
+             MAE     MSE    RMSE  RMSE_normalised      R2
+model     0.9811  1.7145  1.3094           0.1871  0.0285
+baseline  1.0886  1.8399  1.3564           0.1938 -0.0426
+
+5-fold cross-validated R-squared per fold: [0.194 0.1   0.234 0.019 0.243]
+5-fold cross-validated R-squared, mean: 0.1582
+
+R-squared on the training set: 0.3013
+Adjusted R-squared on the training set: 0.2657
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:              goals_for   R-squared:                       0.301
+Model:                            OLS   Adj. R-squared:                  0.266
+Method:                 Least Squares   F-statistic:                     8.461
+Date:                Wed, 14 Oct 2026   Prob (F-statistic):           1.56e-09
+Time:                        23:32:47   Log-Likelihood:                -261.63
+No. Observations:                 166   AIC:                             541.3
+Df Residuals:                     157   BIC:                             569.3
+Df Model:                           8                                         
+Covariance Type:            nonrobust                                         
+====================================================================================
+                       coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------------
+const                0.8561      2.000      0.428      0.669      -3.093       4.806
+own_elo              0.0029      0.001      3.562      0.000       0.001       0.005
+opp_elo             -0.0027      0.001     -4.585      0.000      -0.004      -0.002
+own_qual_gf_pg       0.2527      0.097      2.602      0.010       0.061       0.445
+opp_qual_ga_pg      -0.0044      0.243     -0.018      0.986      -0.485       0.476
+is_host              0.4266      0.390      1.095      0.275      -0.343       1.196
+knockout            -0.3502      0.245     -1.428      0.155      -0.835       0.134
+rest_days           -0.0583      0.105     -0.554      0.580      -0.266       0.149
+is_uefa_conmebol    -0.0335      0.293     -0.115      0.909      -0.611       0.544
+==============================================================================
+Omnibus:                       22.469   Durbin-Watson:                   1.790
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               33.165
+Skew:                           0.749   Prob(JB):                     6.28e-08
+Kurtosis:                       4.597   Cond. No.                     5.58e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 5.58e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.
