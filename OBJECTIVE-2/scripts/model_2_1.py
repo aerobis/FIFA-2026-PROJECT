@@ -11,7 +11,9 @@ from statsmodels.stats.diagnostic import het_breuschpagan
 sns.set_theme(style="whitegrid")
 
 # Locate data folder relative to this script
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
+BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+DATA_DIR = os.path.join(BASE_DIR, "data")
+RESULTS_DIR = os.path.join(BASE_DIR, "results")
 
 
 def load_dataset():
@@ -36,7 +38,7 @@ def calculate_vif(X_const):
     return vif_data[vif_data["Feature"] != "const"].reset_index(drop=True)
 
 
-def plot_diagnostics(model, output_filename="model_2_1_diagnostics.png"):
+def plot_diagnostics(model, output_path):
     fitted = model.fittedvalues
     residuals = model.resid
     influence = model.get_influence()
@@ -74,9 +76,10 @@ def plot_diagnostics(model, output_filename="model_2_1_diagnostics.png"):
     axes[1, 1].set_ylabel("Cook's Distance")
     axes[1, 1].legend()
 
-    # Save to disk
-    plt.savefig(output_filename, dpi=300)
-    print(f"Saved diagnostic plot to: {output_filename}")
+    # Make sure the results folder exists, then save
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    plt.savefig(output_path, dpi=300)
+    print(f"Saved diagnostic plot to: {output_path}")
     plt.close()
 
 
@@ -129,8 +132,8 @@ def main():
     else:
         print("Note: Homoscedasticity assumption holds (p >= 0.05).")
 
-    # 5. Generate and save diagnostic plot
-    plot_diagnostics(model, output_filename="model_2_1_diagnostics.png")
+    # 5. Generate and save diagnostic plot in 'results' folder
+    plot_diagnostics(model, os.path.join(RESULTS_DIR, "model_2_1_diagnostics.png"))
 
 
 if __name__ == "__main__":
