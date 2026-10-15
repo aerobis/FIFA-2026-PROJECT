@@ -20,12 +20,14 @@ Output:  Writes into the 'data/' folder:
             host_matches_used.txt     (the 8 matches used for each host)
 """
 import csv
+import os
 import time
 import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
 
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 BASE = "https://www.eloratings.net/"
 CUTOFF = 20260611        # tournament start: only matches BEFORE this date count
 QUAL_START = 20230101    # start of the 2026 qualifying cycle
@@ -186,15 +188,15 @@ def main():
         print(f"ok       {name}: elo {elo}, {games} games, GF/g {gf}, GA/g {ga}")
         time.sleep(0.5)   # to avoid exhausting the website
 
-    with open("team_elo_qual.csv", "w", newline="", encoding="utf-8") as f:
+    with open(os.path.join(DATA_DIR, "team_elo_qual.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["team", "elo", "qual_gf_pg", "qual_ga_pg"])
         w.writerows(main_rows)
-    with open("team_elo_qual_checks.csv", "w", newline="", encoding="utf-8") as f:
+    with open(os.path.join(DATA_DIR, "team_elo_qual_checks.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["team", "elo", "qual_gf_pg", "qual_ga_pg", "games", "source_note"])
         w.writerows(check_rows)
-    with open("host_matches_used.txt", "w", encoding="utf-8") as f:
+    with open(os.path.join(DATA_DIR, "host_matches_used.txt"), "w", newline="", encoding="utf-8") as f:
         f.write("\n".join(host_log) + "\n")
     print("\nWrote team_elo_qual.csv, team_elo_qual_checks.csv, host_matches_used.txt")
 

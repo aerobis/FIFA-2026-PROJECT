@@ -88,10 +88,8 @@ Run from the OBJECTIVE-2 folder, in this order:
 2. python scripts/build_tables.py     builds data/model_2_1.csv, model_2_2.csv and merged_long.csv
 3. python scripts/model_2_1.py        Model 2.1 on all rows: OLS summary, VIF, Breusch-Pagan, diagnostic plots
 4. python scripts/model_2_2.py        Model 2.2 on all rows: same checks, plus p-values clustered by match
-5. python scripts/run_models.py       80/20 train/test split (random_state=0), baseline comparison and
-                                      5 fold cross-validation for both models
-56. python scripts/figures.py         Figure 1 of the report (results/report_figure1.png)
-
+5. python scripts/run_models.py       80/20 train/test split (random_state=0), baseline comparison and                                      5-fold cross-validation for both models
+6. python scripts/figures.py         Figure 1 of the report (results/report_figure1.png)
 
 # Report notes
-Tables 2 and 3 of the report come from steps 2-4. Model 2.2's test split is by match, so both rows of a match stay in the same set
+Tables 2 and 3 of the report come from steps 3-5. Model 2.2's test split is by match, so both rows of a match stay in the same set. As build_elo_qual.py reads from a live website, data/team_elo_qual.csv is to be taken as the snapshot of the data used for the data analysis done in this project.
